@@ -1,0 +1,76 @@
+@model IEnumerable<library.Models.Book>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Books</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.user)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.publisher)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.year)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.publisher)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.status)
+            </td>
+            
+                @if (User.Identity.Name != "librarian@eml.com")
+                {
+                <td>
+                <a asp-action="Edit2" asp-route-id="@item.book_id">Reserve</a> |
+                <a asp-action="Revoke" asp-route-id="@item.book_id">Revoke</a> 
+                </td>
+                }
+                else{
+                    <td>
+                    <a asp-action="Conf" asp-route-id="@item.book_id">Confirm</a> |
+                    <a asp-action="DConfirm" asp-route-id="@item.book_id">Reject</a>
+                    </td>
+                }
+                
+            
+        </tr>
+}
+    </tbody>
+</table>
